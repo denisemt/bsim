@@ -5,3 +5,24 @@ We adapted the DDE model presented in the above article and implemented the mode
 
 A video of the simulation can be seen [here](https://www.youtube.com/watch?v=FpG7EgIC5yI)
 
+
+##### How to run it
+# Running the example
+
+Assuming the BSim repository root directory is `$BSIM_SRC`.
+
+First, build everything:
+```
+cd $BSIM_SRC
+
+git pull
+
+ant -f bsim-build-tree.xml
+```
+
+Then go to the build dir:
+```
+cd out/production/$BSIM_SRC/
+
+java  -cp .:../../../lib/core.jar:../../../lib/vecmath.jar:../../../lib/objimport.jar:../../../lib/jcommander-1.49-SNAPSHOT.jar:../../../lib/bsim-osp.jar BSimChenOscillator.BSimChenOscillatorExample
+```

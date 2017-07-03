@@ -8,7 +8,11 @@ import bsim.BSim;
 import bsim.BSimChemicalField;
 import bsim.BSimUtils;
 
+import com.kabouterlabs.jodeint.codepack.CodepackLibrary;
+import org.bridj.Pointer;
+
 /**
+ *
  * Class representing a bacterium whose run-tumble motion 
  * is affected in a simple way by a single goal chemical.
  */
