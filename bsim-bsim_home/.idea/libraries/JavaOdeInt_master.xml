@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="JavaOdeInt-master">
+    <CLASSES>
+      <root url="file://$USER_HOME$/JavaOdeInt-master" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$USER_HOME$/JavaOdeInt-master/jodeint/target/apidocs" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/JavaOdeInt-master/jodeint/src/main/java" />
+      <root url="file://$USER_HOME$/JavaOdeInt-master/jodeint/src/main/test/java" />
+    </SOURCES>
+  </library>
+</component>

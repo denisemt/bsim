@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bsim3.0-doc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/docs/javadoc/bsim3.0-doc.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

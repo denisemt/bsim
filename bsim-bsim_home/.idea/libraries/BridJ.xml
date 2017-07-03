@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="BridJ">
+    <CLASSES>
+      <root url="file://$USER_HOME$/BridJ" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$USER_HOME$/BridJ/target/apidocs" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/BridJ" />
+      <root url="file://$USER_HOME$/BridJ/Examples/AndroidExample/src" />
+      <root url="file://$USER_HOME$/BridJ/Examples/BasicExample/src/test/java" />
+      <root url="file://$USER_HOME$/BridJ/src/main" />
+      <root url="file://$USER_HOME$/BridJ/src/main/cpp/android-test/src" />
+      <root url="file://$USER_HOME$/BridJ/src/main/cpp/android-test/tests/src" />
+      <root url="file://$USER_HOME$/BridJ/src/main/java" />
+      <root url="file://$USER_HOME$/BridJ/src/test/java" />
+      <root url="file://$USER_HOME$/BridJ/src/test/velocity" />
+      <root url="file://$USER_HOME$/BridJ/target/generated-sources/main" />
+      <root url="file://$USER_HOME$/BridJ/target/generated-sources/test" />
+    </SOURCES>
+  </library>
+</component>
