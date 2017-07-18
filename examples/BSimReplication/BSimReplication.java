@@ -131,7 +131,7 @@ public class BSimReplication {
 		System.out.printf("Marke 1 ");
 
 		try {
-			double[] y = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.0, 1000.0};
+			double[] y = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.0, 1000.0};
 			System.out.print("y: ");
 			System.out.println(y[3]);
 			System.out.print("\n");
@@ -141,7 +141,7 @@ public class BSimReplication {
 
 			System.out.printf("Marke 2 ");
 
-			System.out.printf("yy: %.4f");
+			System.out.printf("yy: %.4f", yy);
 			System.out.print("\n");
 
 			int[] j = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
@@ -149,7 +149,7 @@ public class BSimReplication {
 			System.out.println(j[5]);
 			System.out.print("\n");
 
-			yy = new MWNumericArray(j, MWClassID.INT8);//, MWClassID.DOUBLE);
+			yy = new MWNumericArray(y, MWClassID.INT8);//, MWClassID.DOUBLE);
 
 
 			/*
@@ -157,14 +157,17 @@ public class BSimReplication {
 				yy.set(i,y[i]);
 			}*/
 			//double[] yyA = toDoubleArray(yy);
-			System.out.print(yy[21]);
+			System.out.print(yy.numberOfElements());
+			System.out.println(yy.getClass().getName());
 			System.out.print("\n");
 
 			t0 = new MWNumericArray(time, MWClassID.DOUBLE);
 			tf = new MWNumericArray(endTime, MWClassID.DOUBLE);
 
 			System.out.println(t0);
+			System.out.println(t0.getClass().getName());
 			System.out.println(tf);
+			System.out.println(tf.getClass().getName());
 			System.out.print("\n");
 
 			System.out.printf("Marke 3 ");
@@ -174,8 +177,8 @@ public class BSimReplication {
 
 			System.out.printf("Marke 4 ");
 
-
-			yNew = theMagic.stiffODE(1, yy, t0, tf);
+			yNew = theMagic.stiffODE(1, y,time,endTime);
+			//yNew = theMagic.stiffODE(1, yy, t0, tf);
 			System.out.printf("Marke 5 ");
 
 
