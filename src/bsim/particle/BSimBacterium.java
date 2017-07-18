@@ -23,7 +23,9 @@ import com.kabouterlabs.jodeint.codepack.CodepackLibrary;
 import org.bridj.Pointer;
 
 import com.mathworks.toolbox.javabuilder.*;
-import stiffODE.*;
+//import stiffODE.*;
+import TESTstiffSolver.Class1;
+import TESTstiffSolver.*;
 
 /**
  *
@@ -224,7 +226,7 @@ public class BSimBacterium extends BSimParticle {
     /******************************************************************************************************************/
 
     protected LambdaOdeSystem lamSys;
-    protected double[] y, yNew;
+    protected double[] y;
     public double lambda;
 
     class LambdaOdeSystem implements BSimOdeSystem {
@@ -481,6 +483,7 @@ public class BSimBacterium extends BSimParticle {
 		setDirection(new Vector3d(0.5-Math.random(),0.5-Math.random(),0.5-Math.random()));
         lamSys = new LambdaOdeSystem();
         y = lamSys.getICs();
+        //Object[] yy;
 		/*
         MWNumericArray yy = null;
 		MWNumericArray t0 = null;
@@ -661,19 +664,57 @@ public class BSimBacterium extends BSimParticle {
 			rotationalDiffusion();
 			flagellarForce();
 		}
-		MWNumericArray yy = null;
-		MWNumericArray t0 = null;
-		MWNumericArray tf = null;
-		Object[] ynew = null;
-		Class1 theMagic = null;
 
-		yy = new MWNumericArray(y, MWClassID.DOUBLE);
-		t0 = new MWNumericArray(Double.valueOf(sim.getTime()), MWClassID.DOUBLE);
-		tf = new MWNumericArray(Double.valueOf(sim.getDt()+sim.getTime()), MWClassID.DOUBLE);
+		try {
+			Object[] yNew = null;
+			Class1 theMagic = new TESTstiffSolver.Class1();
 
-        //yNew = theMagic.stiffODE(22, yy, t0, tf);
-        y = yNew;
+			double t0 = sim.getTime();
+			double tf = sim.getDt() + sim.getTime();
 
+			yNew = theMagic.TESTstiffSolver(lamSys.getNumEq(), y, t0, tf);
+			double[] YNEW = new double[lamSys.getNumEq()];
+			for (int k=0; k<lamSys.getNumEq(); k++) {
+				YNEW[k] = Double.valueOf(yNew[k].toString());
+			}
+			y = YNEW;
+
+			// here calculate lambda and set surfaceAreaGrowthRate
+
+			//PARAMETERS
+			// 0: thetar= 426.8693338968694;  % ribosome transcription threshold [molecs/cell]
+			// 1: k_cm= 0.005990373118888;    % chloramphenicol-binding rate [1/(min microM)]
+			// 2: s0= 1.0e4;                  % external nutrient [molecs]
+			// 3: gmax= 1260.0;               % max. transl. elongation rate [aa/(min molecs)]
+			// 4: cl= 0;                      % ribosome-bound mRNA??????????????
+			// 5: thetax= 4.379733394834643;  % non-ribosomal transcription threshold [molecs/cell]
+			// 6: Kt= 1.0e3;                  % nutrient import threshold [molecs]
+			// 7: M= 1.0e8;                   % total cell mass [aa]
+			// 8: we= 4.139172187824451;      % max. enzyme transcription rate [molecs/(min cell)]
+			// 9: Km= 1.0e3;                  % enzymatic threshold [molecs/cell]
+			//10: vm= 5800.0;                 % max. enzymatic rate [1/min]
+			//11: nx= 300.0;                  % length of non-ribosomal protein [aa/molecs]
+			//12: Kq= 1.522190403737490e+05;  % q-autoinhibition threshold [molecs/cell]
+			//13: Kp= 180.1378030928276;      % K_p = k_1*k_2/(k_(-1) + k_2) (translation)
+			//14: vt= 726.0;                  % max. nutrient import rate [1/min]
+			//15: wr= 929.9678874564831;      % max. ribosome transcription rate [molecs/(min cell)]
+			//16: wq= 948.9349882947897;      % max. q-transcription rate [molecs/(min cell)]
+			//17: wp= 0.0;                    % ?????? for another gene
+			//18: nq= 4;                      % q-autoinhibition Hill coeff. [none]
+			//19: nr= 7549.0;                 % ribosome length [aa/molecs]
+			//20: ns= 0.5;                    % nutrient efficiency [none]
+
+			//Kgamma= para[3]/para[13];               // transl. elongation treshold (half-max. elongation)
+			double gamma= 1260.0*y[21]/(1260.0/180.1378030928276 + y[21]);  // transl. elongation rate
+			double R_t = y[3] + y[0] + y[2] + y[4] + y[6]; // sum of translating ribosomes (sum c_x)
+			double ttrate= R_t*gamma;                      // translation-transcription rate?
+			double lam = ttrate/1.0e8;                   // growth-rate (M is total protein mass)
+			setSurfaceAreaGrowthRate(lam);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Exception: " + e.toString());
+		}
 		/*
 		// Construct ODEs for solving all contact constraints
 		ODE odes = new RepressilatorODESystem();

@@ -15,7 +15,9 @@ import bsim.particle.BSimBacterium;
 import com.mathworks.toolbox.javabuilder.*;
 import makesqr.*;
 import stiffODE.*;
-import stiffODE.Class1;
+//import stiffODE.Class1;
+import TESTstiffSolver.*;
+import TESTstiffSolver.Class1;
 
 /**
  * Growth and replication test.</br>
@@ -30,9 +32,8 @@ public class BSimReplication {
 		/*********************************************************
 		 * Set simulation properties
 		 */
-		/*
 		BSim sim = new BSim();
-		sim.setDt(10000);
+		sim.setDt(1);
 		sim.setSimulationTime(10000);
 		//BSimReplication b = new BSimReplication();
 		//ODE odes = b.new RepressilatorODESystem();
@@ -40,7 +41,7 @@ public class BSimReplication {
 		/*********************************************************
 		 * Set up the bacteria
 		 */
-		/*
+
 		final Vector<BSimBacterium> bacteria = new Vector<BSimBacterium>();
 		final Vector<BSimBacterium> children = new Vector<BSimBacterium>();
 		while(bacteria.size() < 1) {		
@@ -54,7 +55,7 @@ public class BSimReplication {
 		/*********************************************************
 		 * Set up the ticker
 		 */
-		/*
+
 		sim.setTicker(new BSimTicker() {
 			@Override
 			public void tick() {
@@ -72,7 +73,7 @@ public class BSimReplication {
 		/*********************************************************
 		 * Set up the drawer
 		 */
-		/*
+
 		BSimP3DDrawer drawer = new BSimP3DDrawer(sim, 800,600) {
 			@Override
 			public void scene(PGraphics3D p3d) {						
@@ -85,7 +86,9 @@ public class BSimReplication {
 
 		// Run the simulation
 		sim.preview();
-		*/
+
+
+		//*********************************************************************
 		//TEST MATLAB MAGIC
 		/*
 		String[] arg = {String.valueOf(5)};
@@ -121,7 +124,9 @@ public class BSimReplication {
 			theMagic.dispose();
 		}
 		*/
-
+		//********************************************************
+		// Test our model with matlabcontrol
+		/*
 		MWNumericArray yy = null;
 		MWNumericArray t0 = null;
 		MWNumericArray tf = null;
@@ -140,7 +145,7 @@ public class BSimReplication {
 			double endTime = 1e7;
 
 			System.out.printf("Marke 2 ");
-
+			/*
 			System.out.printf("yy: %.4f", yy);
 			System.out.print("\n");
 
@@ -156,9 +161,10 @@ public class BSimReplication {
 			for (int i=0; i<22; i++){
 				yy.set(i,y[i]);
 			}*/
+			/*
 			//double[] yyA = toDoubleArray(yy);
 			System.out.print(yy.numberOfElements());
-			System.out.println(yy.getClass().getName());
+			System.out.println(y.getClass().getName());
 			System.out.print("\n");
 
 			t0 = new MWNumericArray(time, MWClassID.DOUBLE);
@@ -183,12 +189,94 @@ public class BSimReplication {
 
 
 			System.out.println(yNew[0]);
+			System.out.println(yNew.getClass().getName());
+
 			System.out.print("\n");
+			String yNew2 = yNew[0].toString();
+			System.out.println(yNew2);
+			System.out.println(yNew2.getClass().getName());
+			//System.out.println(yNew2[0]);
+
+			System.out.print("\n");
+			System.out.println(yNew.getClass().getName());
+			//double[] yNew3 = Double[].valueOf(yNew2);
+			*/
+
+			/*
+			//Trying to convert
+			System.out.print("TROUBLESHOOTING \n");
+			theMagic = new TESTstiffSolver.Class1();
+			yNew = theMagic.TESTstiffSolver(22, y,time,endTime);
+
+			System.out.printf("Marke 0 ");
+			System.out.println(yNew);
+			System.out.print(yNew.length);
+
+			for (int k=0; k<22; k++) {
+				System.out.println(yNew[k]);
+			}
+
+			System.out.println(yNew.getClass().getName());
+
+			System.out.print("Marke 00 ");
+
+			double[] YNEWWW = new double[22];
+
+			int[] zahl = {1,22};
+			MWClassID mwClassID = MWClassID.DOUBLE;
+			System.out.println(mwClassID);
+			//MWNumericArray YNEW = MWNumericArray.newInstance(zahl, yNew, mwClassID);
+			double[] YNEW = new double[22];
+			for (int k=0; k<22; k++) {
+				YNEW[k] = Double.valueOf(yNew[k].toString());
+				System.out.println(yNew[k]);
+			}
+			System.out.println(YNEW.length);
+			//YNEWWW = YNEW.getDoubleData();
+			System.out.println(YNEW.getClass().getName());
+			for (int k=0; k<22; k++) {
+				//YNEWWW[k] = yNew[k].getDouble()
+				System.out.println(YNEW[k]);
+			}
+			//System.out.println(YNEW.getClass().getName());
+
+			yNew = theMagic.TESTstiffSolver(22, YNEW,time,endTime);
+
+			System.out.printf("Marke 1 ");
+			System.out.println(yNew[0]);
+
+			/*
+			//int[] zahl = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
+			int[] zahl = {0,22};
+			double[] YNEW2 = new double[zahl[1]];
+			System.out.printf("Marke 2 ");
+			System.out.println(zahl);
+			System.out.println(YNEW2);
+			MWClassID mwClassID = MWClassID.DOUBLE;
+			System.out.printf("Marke 3 ");
+			System.out.println(mwClassID);
+			MWNumericArray YNEW = MWNumericArray.newInstance(zahl, yNew[0], mwClassID);
+			System.out.printf("Marke 4 ");
+			System.out.println(YNEW.getDimensions()[1]);
+			YNEW2 = YNEW.getDoubleData();
+			System.out.printf("Marke 5 ");
+			System.out.println(YNEW2);
+
+			System.out.print(YNEW2.length);
+			System.out.print("\n");
+
+			for (int k=0; k<zahl[0]; k++) {
+				System.out.println(YNEW2[k]);
+			}
+			System.out.printf("Marke 6 ");
+			System.out.println(YNEW2[1]);
+			*/
+		/*
 		}
 		catch (Exception e)
 		{
 			System.out.println("Exception: " + e.toString());
-		}
+		}*/
 	}
 	/*
 	class RepressilatorODESystem implements ODE {
