@@ -29,7 +29,7 @@ public class BSimReplication {
 		 */
 		BSim sim = new BSim();
 		sim.setDt(60);
-		sim.setSimulationTime(1800);
+		sim.setSimulationTime(800);
 						
 		/*********************************************************
 		 * Set up the bacteria
@@ -54,7 +54,8 @@ public class BSimReplication {
 			public void tick() {
 				for(BSimBacterium b : bacteria) {
 					b.action();		
-					b.updatePosition();					
+					b.updatePosition();
+					//System.out.printf("first entry %.2f ", b.getY(0));
 				}
 				bacteria.addAll(children);
 				children.clear();
@@ -102,6 +103,38 @@ public class BSimReplication {
 		};
 		CellNumber.setDt(60);
 		sim.addExporter(CellNumber);
+
+        BSimLogger tars = new BSimLogger(sim, "cells_trajectories.csv") {
+            @Override
+            public void before() {
+                super.before();
+
+                String buffer = "time";
+
+                if(bacteria.size() > 0) {
+                    for (int j = 0; j < 22; j++) {
+                        buffer += ",tra(" + j + ")";
+                    }
+                }
+
+                write(buffer);
+            }
+
+            @Override
+            public void during() {
+                String buffer = "" + sim.getFormattedTime();
+
+                for(BSimBacterium b : bacteria) {
+                    for(int j = 0; j < 22; j++) {
+                        buffer += "," + b.getY(j);
+                    }
+                }
+
+                write(buffer);
+            }
+        };
+        tars.setDt(60);
+        sim.addExporter(tars);
 
 		sim.export();
 	}

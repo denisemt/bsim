@@ -224,7 +224,7 @@ public class BSimBacterium extends BSimParticle {
     /******************************************************************************************************************/
 	/******************************************************/
 	public double[] y;
-	public double[] getY(){return this.y;}
+	public double getY(int i){return this.y[i];}
 
 	public double[] getICs(){
 		double[] ics = new double[22];
@@ -489,8 +489,8 @@ public class BSimBacterium extends BSimParticle {
 		double R_t = y[3] + y[0] + y[2] + y[4] + y[6];           // sum of translating ribosomes (sum c_x)
 		//aatot= nx*(q+et+em)+nr*(rmq+rmr+rmp+rmt+rmm);
 		double M = 300.0 * (y[14] + y[5] + y[1]) + 7459.0 * R_t; // total cell mass
-		double Kgamma= 1260.0 / 180.1378030928276*M/Mref;                              // transl. elongation treshold (half-max. elongation)
-		double gamma = 1260.0 * y[21] / (Kgamma + y[21]);  // transl. elongation rate
+		double Kgamma= 1260.0 / 180.1378030928276*M/Mref;        // transl. elongation treshold (half-max. elongation)
+		double gamma = 1260.0 * y[21] / (Kgamma + y[21]);        // transl. elongation rate
 
 		double ttrate = R_t * gamma;                             // translation-transcription rate?
 		double lam = ttrate / M;                                 // growth-rate (M is total protein mass)
