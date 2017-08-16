@@ -69,6 +69,15 @@
     <pathelement location="${basedir}/lib/objimport.jar"/>
     <pathelement location="${basedir}/lib/vecmath.jar"/>
   </path>
+
+  <path id="library.javabuilder.classpath">
+    <pathelement location="/usr/local/MATLAB/R2016a/toolbox/javabuilder/jar/javabuilder.jar"/>
+  </path>
+
+  <path id="library.MatMagic.classpath">
+    <pathelement location="${basedir}/MatlabMagicSim2/IMPLsolver/for_testing/IMPLsolver.jar"/>
+  </path>
+
   
   <!-- Modules -->
   
@@ -92,6 +101,8 @@
     <path refid="library.lib.classpath"/>
     <path refid="library.bsim-osp.classpath"/>
     <path refid="library.jcommander-1.49-snapshot.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.MatMagic.classpath"/>
   </path>
   
   <path id="bsim-bristol.runtime.production.module.classpath">
@@ -99,6 +110,8 @@
     <path refid="library.lib.classpath"/>
     <path refid="library.bsim-osp.classpath"/>
     <path refid="library.jcommander-1.49-snapshot.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.MatMagic.classpath"/>
   </path>
   
   <path id="bsim-bristol.module.classpath">
@@ -106,6 +119,8 @@
     <path refid="library.lib.classpath"/>
     <path refid="library.bsim-osp.classpath"/>
     <path refid="library.jcommander-1.49-snapshot.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.MatMagic.classpath"/>
   </path>
   
   <path id="bsim-bristol.runtime.module.classpath">
@@ -114,6 +129,8 @@
     <path refid="library.lib.classpath"/>
     <path refid="library.bsim-osp.classpath"/>
     <path refid="library.jcommander-1.49-snapshot.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.MatMagic.classpath"/>
   </path>
   
   

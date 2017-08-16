@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bsim" default="all">
+  
+  
+  <property file="bsim-test-build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.implsolver.classpath">
+    <pathelement location="${basedir}/../Masterthesis/Matlab/MatlabMagicSim2/IMPLsolver/for_testing/IMPLsolver.jar"/>
+  </path>
+  
+  <path id="library.javabuilder.classpath">
+    <pathelement location="${basedir}/../../../usr/local/MATLAB/R2016b/toolbox/javabuilder/jar/javabuilder.jar"/>
+  </path>
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/lib/bsim-osp.jar"/>
+    <pathelement location="${basedir}/lib/core.jar"/>
+    <pathelement location="${basedir}/lib/jcommander-1.49-SNAPSHOT.jar"/>
+    <pathelement location="${basedir}/lib/objimport.jar"/>
+    <pathelement location="${basedir}/lib/vecmath.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module BSIM -->
+  
+  <dirname property="module.bsim.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.bsim" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="bsim.output.dir" value="${module.bsim.basedir}/out/production/BSIM"/>
+  <property name="bsim.testoutput.dir" value="${module.bsim.basedir}/out/test/BSIM"/>
+  
+  <path id="bsim.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bsim.module.production.classpath">
+    <path refid="library.lib.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.implsolver.classpath"/>
+  </path>
+  
+  <path id="bsim.runtime.production.module.classpath">
+    <pathelement location="${bsim.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.implsolver.classpath"/>
+  </path>
+  
+  <path id="bsim.module.classpath">
+    <pathelement location="${bsim.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.implsolver.classpath"/>
+  </path>
+  
+  <path id="bsim.runtime.module.classpath">
+    <pathelement location="${bsim.testoutput.dir}"/>
+    <pathelement location="${bsim.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.javabuilder.classpath"/>
+    <path refid="library.implsolver.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bsim">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bsim">
+    <patternset refid="excluded.from.module.bsim"/>
+  </patternset>
+  
+  <path id="bsim.module.sourcepath">
+    <dirset dir="${module.bsim.basedir}">
+      <include name="examples"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="bsim.module.test.sourcepath">
+    <dirset dir="${module.bsim.basedir}">
+      <include name="test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.bsim" depends="compile.module.bsim.production,compile.module.bsim.tests" description="Compile module BSIM"/>
+  
+  <target name="compile.module.bsim.production" description="Compile module BSIM; production classes">
+    <mkdir dir="${bsim.output.dir}"/>
+    <javac destdir="${bsim.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bsim}"/>
+      <bootclasspath refid="bsim.module.bootclasspath"/>
+      <classpath refid="bsim.module.production.classpath"/>
+      <src refid="bsim.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bsim"/>
+    </javac>
+    
+    <copy todir="${bsim.output.dir}">
+      <fileset dir="${module.bsim.basedir}/examples">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.bsim.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.bsim.tests" depends="compile.module.bsim.production" description="compile module BSIM; test classes" unless="skip.tests">
+    <mkdir dir="${bsim.testoutput.dir}"/>
+    <javac destdir="${bsim.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bsim}"/>
+      <bootclasspath refid="bsim.module.bootclasspath"/>
+      <classpath refid="bsim.module.classpath"/>
+      <src refid="bsim.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bsim"/>
+    </javac>
+    
+    <copy todir="${bsim.testoutput.dir}">
+      <fileset dir="${module.bsim.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.bsim" description="cleanup module">
+    <delete dir="${bsim.output.dir}"/>
+    <delete dir="${bsim.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.bsim" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.bsim" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

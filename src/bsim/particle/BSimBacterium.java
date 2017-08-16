@@ -8,6 +8,7 @@ import javax.vecmath.Vector3d;
 import bsim.BSim;
 import bsim.BSimChemicalField;
 import bsim.BSimUtils;
+/**
 import bsim.ode.BSimOdeSolver;
 import bsim.ode.BSimOdeSystem;
 
@@ -18,7 +19,7 @@ import org.opensourcephysics.numerics.ODE;
 import org.opensourcephysics.numerics.ode_interpolation.StateHistory;
 import org.opensourcephysics.numerics.ode_solvers.InterpolatorEventSolver;
 import org.opensourcephysics.numerics.ode_solvers.rk.*;
-
+**/
 //import com.kabouterlabs.jodeint.codepack.CodepackLibrary;
 //import org.bridj.Pointer;
 

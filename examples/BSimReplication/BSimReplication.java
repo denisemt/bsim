@@ -6,11 +6,11 @@ import java.util.Vector;
 import javax.vecmath.Vector3d;
 
 import bsim.export.BSimLogger;
-import org.opensourcephysics.numerics.ODE;
-import processing.core.PGraphics3D;
+//import org.opensourcephysics.numerics.ODE;
+//import processing.core.PGraphics3D;
 import bsim.BSim;
 import bsim.BSimTicker;
-import bsim.draw.BSimP3DDrawer;
+//import bsim.draw.BSimP3DDrawer;
 import bsim.particle.BSimBacterium;
 
 
@@ -109,7 +109,7 @@ public class BSimReplication {
             public void before() {
                 super.before();
 
-                String buffer = "time";
+                String buffer = "time, ";
 
                 if(bacteria.size() > 0) {
                     for (int j = 0; j < 22; j++) {

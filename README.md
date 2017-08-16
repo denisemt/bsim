@@ -33,6 +33,13 @@ Alternatively, the whole source tree can be build from the command line using An
 
 The resulting compiled classes will reside in the directory `./out/*`.
 
+(For me:
+cd BSIM
+ant -f bsim-test-build.xml
+cd out/production/BSIM/
+java -cp .:/../../../usr/local/MATLAB/R2016b/toolbox/javabuilder/jar/javabuilder.jar:../../../MatlabMagicSim2/IMPLsolver/for_testing/IMPLsolver.jar:../../../lib/core.jar:../../../lib/vecmath.jar:../../../lib/objimport.jar:../../../lib/jcommander-1.49-SNAPSHOT.jar BSimReplication.BSimReplication
+)
+
 ## Citing BSim
 
 If you have made use of BSim in academic or commercial work, the project can be referenced using the following paper(s):
