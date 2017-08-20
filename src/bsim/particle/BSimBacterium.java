@@ -339,7 +339,7 @@ public class BSimBacterium extends BSimParticle {
 	 * 	= S(T)/(2*surfaceAreaGrowthRate)
 	 * 	= (2*pi*replicationRadius^2)/surfaceAreaGrowthRate
 	 */
-	protected double replicationRadius = Math.sqrt(2); // microns, so birth radius = 1 micron
+	protected double replicationRadius = 2;//Math.sqrt(2); // microns, so birth radius = 1 micron
 	protected void setReplicationRadius(double r) { replicationRadius = r; }
 	/** The external list of children. Required when bacteria reach the replicationRadius */
 	@SuppressWarnings("rawtypes")
@@ -378,7 +378,7 @@ public class BSimBacterium extends BSimParticle {
 		// if I change BSimBacterium constructor to decide if its the very first mothercell (ICs half of steady state)
         // or every other cell afterwards (ICs half of y of mother), distribution of nutrients between mother daughter
         // should be possible
-		BSimBacterium child = new BSimBacterium(sim, new Vector3d(position));
+		BSimBacterium child = new BSimBacterium(sim, new Vector3d(position), y); //give y as initial condition
 		child.setRadius(radius);
 		// maybe set here half of vector y of mother for child (as ICS)
 		// and set surfaceAreaGrowthRate calculated from half of y as growthrate for children
@@ -431,6 +431,13 @@ public class BSimBacterium extends BSimParticle {
         y = getICs();
 
     }
+
+	public BSimBacterium(BSim sim, Vector3d position, double[] initcond) {
+		super(sim, position, 1); // default radius 1 micron
+		setMotionState(MotionState.RUNNING);
+		setDirection(new Vector3d(0.5-Math.random(),0.5-Math.random(),0.5-Math.random()));
+		y = initcond;
+	}
 
     public double getLambda(){
         return surfaceAreaGrowthRate;

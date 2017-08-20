@@ -29,7 +29,7 @@ public class BSimReplication {
 		 */
 		BSim sim = new BSim();
 		sim.setDt(60);
-		sim.setSimulationTime(800);
+		sim.setSimulationTime(4000);
 						
 		/*********************************************************
 		 * Set up the bacteria
