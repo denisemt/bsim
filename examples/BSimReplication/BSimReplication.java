@@ -1,6 +1,9 @@
 package BSimReplication;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.vecmath.Vector3d;
@@ -12,6 +15,7 @@ import bsim.BSim;
 import bsim.BSimTicker;
 //import bsim.draw.BSimP3DDrawer;
 import bsim.particle.BSimBacterium;
+import bsim.*;
 
 
 /**
@@ -29,7 +33,7 @@ public class BSimReplication {
 		 */
 		BSim sim = new BSim();
 		sim.setDt(60);
-		sim.setSimulationTime(4000);
+		sim.setSimulationTime(36000);
 						
 		/*********************************************************
 		 * Set up the bacteria
@@ -105,6 +109,8 @@ public class BSimReplication {
 		sim.addExporter(CellNumber);
 
         BSimLogger tars = new BSimLogger(sim, "cells_trajectories.csv") {
+
+        	DecimalFormat formatter = new DecimalFormat("##########.##################", DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
             @Override
             public void before() {
                 super.before();
@@ -126,7 +132,7 @@ public class BSimReplication {
 
                 for(BSimBacterium b : bacteria) {
                     for(int j = 0; j < 22; j++) {
-                        buffer += "," + b.getY(j);
+                        buffer += "," + formatter.format(b.getY(j));
                     }
                 }
 
@@ -135,6 +141,54 @@ public class BSimReplication {
         };
         tars.setDt(60);
         sim.addExporter(tars);
+
+		BSimLogger rad = new BSimLogger(sim, "cells_radii.csv") {
+
+			DecimalFormat formatter = new DecimalFormat("###.##################", DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
+			@Override
+			public void before() {
+				super.before();
+
+				String buffer = "time, , SurfaceRadius, Current(Model)Radius";
+
+				write(buffer);
+			}
+
+			@Override
+			public void during() {
+				String buffer = "" + sim.getFormattedTime();
+
+				for(BSimBacterium b : bacteria) {
+					buffer += "," + formatter.format(b.getRadius()) + "," + formatter.format(b.getCurrentRadius());
+				}
+
+				write(buffer);
+			}
+		};
+		rad.setDt(60);
+		sim.addExporter(rad);
+
+        BSimLogger lambda = new BSimLogger(sim, "cells_lam.csv") {
+
+            DecimalFormat formatter = new DecimalFormat("###.####################", DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
+            @Override
+            public void before() {
+                super.before();
+                String buffer = "time, , lambda";
+                write(buffer);
+            }
+
+            @Override
+            public void during() {
+                String buffer = "" + sim.getFormattedTime();
+                for(BSimBacterium b : bacteria) {
+                    buffer += "," + formatter.format(b.getLambda());
+                }
+                write(buffer);
+            }
+        };
+        lambda.setDt(60);
+        sim.addExporter(lambda);
 
 		sim.export();
 	}

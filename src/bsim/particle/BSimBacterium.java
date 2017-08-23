@@ -442,7 +442,9 @@ public class BSimBacterium extends BSimParticle {
     public double getLambda(){
         return surfaceAreaGrowthRate;
     }
-
+    protected double CurrentRadius;
+	public void setCurrentRadius(double r) { CurrentRadius = r;}
+	public double getCurrentRadius() {return CurrentRadius;}
 
 	@Override
 	public void action() {
@@ -511,6 +513,7 @@ public class BSimBacterium extends BSimParticle {
 
 		double Volume = 1e-8 * M;
 		double r = Math.pow(3.0 / 4.0 * Volume / Math.PI, (1.0 / 3));
+		setCurrentRadius(r);
 		System.out.print(" radius (from M): ");
 		System.out.print(r);
 		surfaceArea(r);
